@@ -8,10 +8,8 @@ const HeroSection = () => {
     offset: ["start start", "end start"],
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["20%", "20%"]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["60%", "20%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "200%"]);
-
-  const title = "JZB studio ";
 
   return (
     <motion.div
@@ -24,7 +22,7 @@ const HeroSection = () => {
       <motion.div
         className="absolute inset-0 bg-cover bg-center brightness-75"
         style={{
-          backgroundImage: `url('/images/herosection.png')`,
+          backgroundImage: `url(${process.env.PUBLIC_URL}/images/hero.jpg)`,
           backgroundPositionY: backgroundY,
           backgroundSize: "cover",
         }}
@@ -52,7 +50,6 @@ const HeroSection = () => {
               delay: Math.random() * 2,
             }}
           >
-            {/* Star SVG */}
             <svg
               width="12"
               height="12"
@@ -80,19 +77,26 @@ const HeroSection = () => {
         transition={{ delay: 0.5, duration: 1 }}
       />
 
-      {/* Text */}
+      {/* Logo & Subtitle */}
       <motion.div
         className="relative z-20 text-center px-4"
         style={{ y: textY }}
       >
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold drop-shadow-lg leading-tight">
-          {title}
-        </h1>
+        <motion.img
+  src={`${process.env.PUBLIC_URL}/images/logoo.png`}
+  alt="JZB Studio Logo"
+  className="h-16 md:h-24 lg:h-32 mx-auto drop-shadow-lg"
+  initial={{ opacity: 0, scale: 0.7 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ delay: 1, duration: 2 }}
+/>
+
+
         <motion.p
           className="mt-4 text-xl md:text-2xl text-gray-200"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
+          transition={{ delay: 2, duration: 1 }}
         >
           Designing tomorrow's landmarks, today.
         </motion.p>

@@ -3,7 +3,7 @@ const projects = [
     id: "1",
     title: "Urban Metropolis Tower",
     location: "New York, USA",
-    imageUrl: "/images/Gemini_Generated_Image_weg1zfweg1zfweg1.png",
+    imageUrl: `${process.env.PUBLIC_URL}/images/Gemini_Generated_Image_weg1zfweg1zfweg1.png`,
     description:
       "A landmark skyscraper designed with sustainable materials and smart city integration. Features include vertical gardens, a public observation deck, and energy-efficient systems. Completed in 2024.",
   },
@@ -11,7 +11,7 @@ const projects = [
     id: "2",
     title: "Coastal Retreat Villa",
     location: "Goa, India",
-    imageUrl: "/images/Gemini_Generated_Image_xpeqsbxpeqsbxpeq.png",
+    imageUrl: `${process.env.PUBLIC_URL}/images/Gemini_Generated_Image_xpeqsbxpeqsbxpeq.png`,
     description:
       "An idyllic private villa nestled along the Goan coastline, blending traditional Indian architecture with modern minimalist design. Maximizes natural light and ventilation. Features expansive ocean views.",
   },
@@ -19,7 +19,7 @@ const projects = [
     id: "3",
     title: "Eco-Friendly Community",
     location: "Bengaluru, India",
-    imageUrl: "/images/project3.png",
+    imageUrl: `${process.env.PUBLIC_URL}/images/project3.png`,
     description:
       "A master-planned community focusing on zero-energy buildings and a vibrant pedestrian-friendly environment. Incorporates rainwater harvesting and solar power solutions for sustainable living.",
   },
@@ -27,7 +27,7 @@ const projects = [
     id: "4",
     title: "Museum of Modern Art",
     location: "London, UK",
-    imageUrl: "/images/project4.png",
+    imageUrl: `${process.env.PUBLIC_URL}/images/project4.png`,
     description:
       "A contemporary museum space designed to reflect the dynamic nature of modern art. Features expansive galleries, a rooftop sculpture garden, and adaptable exhibition areas for diverse collections.",
   },
@@ -35,7 +35,7 @@ const projects = [
     id: "5",
     title: "Riverside Residential Complex",
     location: "Paris, France",
-    imageUrl: "/images/Gemini_Generated_Image_weg1zfweg1zfweg1.png",
+    imageUrl: `${process.env.PUBLIC_URL}/images/Gemini_Generated_Image_weg1zfweg1zfweg1.png`,
     description:
       "A modern residential complex offering luxurious living with panoramic river views. Designed with open-plan layouts and private balconies, promoting a serene urban lifestyle.",
   },
@@ -43,7 +43,7 @@ const projects = [
     id: "6",
     title: "Innovation Hub Campus",
     location: "Berlin, Germany",
-    imageUrl: "/images/project3.png",
+    imageUrl: `${process.env.PUBLIC_URL}/images/project3.png`,
     description:
       "A cutting-edge campus designed to foster collaboration and creativity for tech startups. Features flexible workspaces, green roofs, and advanced smart building technologies.",
   },
