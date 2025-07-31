@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/JZBstudio/static/css/main.c6930606.css",
+    "main.js": "/JZBstudio/static/js/main.fde414df.js",
+    "static/js/453.66d033c0.chunk.js": "/JZBstudio/static/js/453.66d033c0.chunk.js",
+    "index.html": "/JZBstudio/index.html",
+    "main.c6930606.css.map": "/JZBstudio/static/css/main.c6930606.css.map",
+    "main.fde414df.js.map": "/JZBstudio/static/js/main.fde414df.js.map",
+    "453.66d033c0.chunk.js.map": "/JZBstudio/static/js/453.66d033c0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c6930606.css",
+    "static/js/main.fde414df.js"
+  ]
+}
