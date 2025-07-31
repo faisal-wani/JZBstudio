@@ -14,7 +14,7 @@ const HeroSection = () => {
   return (
     <motion.div
       ref={ref}
-      className="relative flex items-center justify-center h-screen overflow-hidden text-white rounded-b-3xl shadow-xl"
+      className="relative flex items-center justify-center min-h-screen overflow-hidden text-white rounded-b-3xl shadow-xl"
       initial="hidden"
       animate="visible"
     >
@@ -83,14 +83,13 @@ const HeroSection = () => {
         style={{ y: textY }}
       >
         <motion.img
-  src={`${process.env.PUBLIC_URL}/images/logoo.png`}
-  alt="JZB Studio Logo"
-  className="h-16 md:h-24 lg:h-32 mx-auto drop-shadow-lg"
-  initial={{ opacity: 0, scale: 0.7 }}
-  animate={{ opacity: 1, scale: 1 }}
-  transition={{ delay: 1, duration: 2 }}
-/>
-
+          src={`${process.env.PUBLIC_URL}/images/Logoo.png`}
+          alt="JZB Studio Logo"
+          className="h-16 md:h-24 lg:h-32 mx-auto drop-shadow-lg"
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1, duration: 2 }}
+        />
 
         <motion.p
           className="mt-4 text-xl md:text-2xl text-gray-200"
