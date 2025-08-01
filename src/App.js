@@ -8,6 +8,7 @@ import AboutSection from "./components/AboutSection";
 import ServicesSection from "./components/ServicesSection";
 import ContactSection from "./components/ContactSection";
 import Loader from "./components/Loader";
+import Navbar from "./components/Navbar"; // ✅ Correct import
 
 import projects from "./data/projects";
 import "./App.css";
@@ -16,7 +17,6 @@ const App = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Open project detail
   const handleSelectProject = (project) => {
     setIsLoading(true);
     setTimeout(() => {
@@ -25,7 +25,6 @@ const App = () => {
     }, 300);
   };
 
-  // Back to project list
   const handleBackToProjects = () => {
     setIsLoading(true);
     setTimeout(() => {
@@ -36,23 +35,22 @@ const App = () => {
 
   return (
     <>
+      {/* ✅ Navbar with logo + hover menu */}
+      <Navbar />
+
       {/* Loader when switching views */}
       <AnimatePresence>{isLoading && <Loader />}</AnimatePresence>
 
       <AnimatePresence mode="wait">
         {selectedProject ? (
-          // Project detail view
-          <ProjectDetail
-            project={selectedProject}
-            onBack={handleBackToProjects}
-          />
+          <ProjectDetail project={selectedProject} onBack={handleBackToProjects} />
         ) : (
-          // Main homepage
           <>
-            <HeroSection />
+            <div id="hero">
+              <HeroSection />
+            </div>
 
-            {/* Project grid */}
-            <section className="container-section">
+            <section id="projects" className="container-section">
               <div className="container mx-auto px-6">
                 <h2 className="section-title">Our Featured Projects</h2>
                 <div className="projects-grid">
@@ -67,11 +65,18 @@ const App = () => {
               </div>
             </section>
 
-            <AboutSection />
-            <ServicesSection />
-            <ContactSection />
+            <div id="about">
+              <AboutSection />
+            </div>
 
-            {/* Footer */}
+            <div id="services">
+              <ServicesSection />
+            </div>
+
+            <div id="contact">
+              <ContactSection />
+            </div>
+
             <footer className="footer-style">
               &copy; 2025 Your Architecture Firm. All rights reserved.
             </footer>

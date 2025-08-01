@@ -31,37 +31,7 @@ const HeroSection = () => {
         transition={{ duration: 1.5 }}
       />
 
-      {/* ⭐ Twinkling Star-Shaped Stars */}
-      <div className="absolute inset-0 z-10 overflow-hidden">
-        {[...Array(40)].map((_, index) => (
-          <motion.div
-            key={index}
-            className="absolute"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              transform: `scale(${Math.random() * 0.8 + 0.5})`,
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 0] }}
-            transition={{
-              duration: Math.random() * 2 + 1,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          >
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="white"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M12 2L14.8 8.6L22 9.2L16.5 14L18 21L12 17.5L6 21L7.5 14L2 9.2L9.2 8.6L12 2Z" />
-            </svg>
-          </motion.div>
-        ))}
-      </div>
+     
 
       {/* Overlay pattern */}
       <motion.div
@@ -77,7 +47,7 @@ const HeroSection = () => {
         transition={{ delay: 0.5, duration: 1 }}
       />
 
-      {/* Logo & Subtitle */}
+      {/* Center Logo & Subtitle */}
       <motion.div
         className="relative z-20 text-center px-4"
         style={{ y: textY }}
@@ -85,7 +55,7 @@ const HeroSection = () => {
         <motion.img
           src={`${process.env.PUBLIC_URL}/images/Logoo.png`}
           alt="JZB Studio Logo"
-          className="h-16 md:h-24 lg:h-32 mx-auto drop-shadow-lg"
+          className="h-12 md:h-16 lg:h-24 mx-auto drop-shadow-lg"
           initial={{ opacity: 0, scale: 0.7 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 1, duration: 2 }}
@@ -97,7 +67,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2, duration: 1 }}
         >
-          Designing tomorrow's landmarks, today.
+            Design. Detail. Distinction.
         </motion.p>
       </motion.div>
 
