@@ -16,24 +16,22 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-white shadow-md" : "bg-transparent"
-      } flex justify-between items-center px-6 py-2`}
+      className={`fixed top-0 w-full z-50 transition-all duration-300 flex justify-between items-center px-6 py-2 ${
+        scrolled
+          ? "backdrop-blur-md bg-black/40 border-b border-white/10 shadow-md"
+          : "bg-transparent"
+      }`}
     >
       {/* Logo wrapped in scroll link */}
       <Link
         to="hero"
         smooth={true}
         duration={500}
-        offset={-70} // Adjust for navbar height
+        offset={-70}
         className="cursor-pointer"
       >
         <img
-          src={
-            scrolled
-              ? `${process.env.PUBLIC_URL}/images/Logoo_black.png`
-              : `${process.env.PUBLIC_URL}/images/Logoo.png`
-          }
+          src={`${process.env.PUBLIC_URL}/images/Logoo.png`}
           alt="Logo"
           className="h-[10px] sm:h-[10px] md:h-[15px] transition-all duration-300"
         />
