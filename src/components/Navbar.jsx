@@ -16,12 +16,13 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300 flex justify-between items-center px-6 py-2 ${
-        scrolled
-          ? "backdrop-blur-md bg-black/40 border-b border-white/10 shadow-md"
-          : "bg-transparent"
-      }`}
-    >
+  className={`fixed top-0 w-full z-50 transition-all duration-300 flex justify-between items-center px-6 py-2 ${
+    scrolled
+      ? "backdrop-blur-md bg-black/40 shadow-md" // ← Removed border-b border-white/10
+      : "bg-transparent"
+  }`}
+>
+
       {/* Logo wrapped in scroll link */}
       <Link
         to="hero"
