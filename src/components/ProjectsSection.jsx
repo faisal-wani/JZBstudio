@@ -42,14 +42,13 @@ const ProjectsSection = () => {
         {selectedProject ? (
           <ProjectDetail project={selectedProject} onBack={handleBackToProjects} />
         ) : (
-          <motion.section
-            id="projects"
-            className="py-16 bg-gray-50"
-            variants={sectionVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
+         <motion.section
+  id="projects"
+  className="py-16 bg-gray-50"
+  variants={sectionVariants}
+  initial="hidden"
+  animate="visible"
+>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <h2 className="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-12">
                 🌟 Our Featured Projects
