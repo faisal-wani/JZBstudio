@@ -53,7 +53,7 @@ const HeroSection = () => {
         style={{ y: textY }}
       >
         <motion.img
-          src={`${process.env.PUBLIC_URL}/images/Logoo.png`}
+          src={`${process.env.PUBLIC_URL}/images/JZB-LOGO.svg`}
           alt="JZB Studio Logo"
           className="h-12 md:h-16 lg:h-24 mx-auto drop-shadow-lg"
           initial={{ opacity: 0, scale: 0.7 }}
@@ -67,7 +67,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2, duration: 1 }}
         >
-            Design. Detail. Distinction.
+            ARCHITECTURE | INTERIOR | URBANISM
         </motion.p>
       </motion.div>
 

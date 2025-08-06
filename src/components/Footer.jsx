@@ -5,9 +5,13 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-10">
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Brand Info */}
+        {/* Brand Logo */}
         <div>
-          <h1 className="text-2xl font-bold mb-4">JZBStudio</h1>
+          <img
+            src={`${process.env.PUBLIC_URL}/images/JZB-LOGO.svg`}
+            alt="JZBStudio Logo"
+            className="h-10 mb-4"
+          />
           <p className="text-sm">
             Crafting digital excellence through design and technology.
           </p>

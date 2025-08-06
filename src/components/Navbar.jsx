@@ -23,8 +23,8 @@ const Navbar = () => {
     >
       {/* Static Logo (not clickable) */}
       <img
-        src={`${process.env.PUBLIC_URL}/images/Logoo.png`}
-        alt="Logo"
+        src={`${process.env.PUBLIC_URL}/images/JZB_ICON.svg`}
+        alt="ZBB Logo"
         className="h-[10px] sm:h-[10px] md:h-[15px] transition-all duration-300"
       />
 
