@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/JZBstudio/static/js/main.7fe4b764.js",
+    "main.js": "/JZBstudio/static/js/main.3a026180.js",
     "index.html": "/JZBstudio/index.html",
-    "main.7fe4b764.js.map": "/JZBstudio/static/js/main.7fe4b764.js.map"
+    "main.3a026180.js.map": "/JZBstudio/static/js/main.3a026180.js.map"
   },
   "entrypoints": [
-    "static/js/main.7fe4b764.js"
+    "static/js/main.3a026180.js"
   ]
 }
