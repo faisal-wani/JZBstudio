@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react"; // fancy icons
 import { Link, useLocation } from "react-router-dom";
 
 const menuVariants = {
-  hidden: { opacity: 0, x: 50 },
+  hidden: { x: 300, opacity: 0 },
   visible: {
-    opacity: 1,
     x: 0,
-    transition: {
-      when: "beforeChildren",
-      staggerChildren: 0.1,
-    },
+    opacity: 1,
+    transition: { when: "beforeChildren", staggerChildren: 0.05 },
   },
-  exit: { opacity: 0, x: 50 },
+  exit: { x: 300, opacity: 0 },
 };
 
 const itemVariants = {
@@ -23,7 +20,7 @@ const itemVariants = {
 
 const submenuVariants = {
   hidden: { height: 0, opacity: 0 },
-  visible: { height: "auto", opacity: 1, transition: { staggerChildren: 0.05 } },
+  visible: { height: "auto", opacity: 1, transition: { staggerChildren: 0.03 } },
 };
 
 const submenuItemVariants = {
@@ -31,57 +28,56 @@ const submenuItemVariants = {
   visible: { opacity: 1, x: 0 },
 };
 
-const MenuBar = () => {
-  const [showMenu, setShowMenu] = useState(false);
+export default function MenuBar() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [showProjectsSubmenu, setShowProjectsSubmenu] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState(null);
   const location = useLocation();
+  const menuRef = useRef(null);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+    };
   }, []);
 
-  const handleMouseEnter = () => {
-    if (!isMobile) setShowMenu(true);
-  };
+  // Close menu on scroll or click outside
+  useEffect(() => {
+    if (!menuOpen) return;
 
-  const handleMouseLeave = () => {
-    if (!isMobile) setShowMenu(false);
-    if (!isMobile) setShowProjectsSubmenu(false);
-  };
+    const onScroll = () => setMenuOpen(false);
 
-  const toggleMenu = () => {
-    if (isMobile) setShowMenu((prev) => !prev);
-  };
+    const onClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setMenuOpen(false);
+      }
+    };
 
-  // Toggle submenu for Projects on mobile
-  const toggleProjectsSubmenu = (e) => {
-    e.preventDefault();
-    if (isMobile) setShowProjectsSubmenu((prev) => !prev);
-  };
+    window.addEventListener("scroll", onScroll, true);
+    window.addEventListener("mousedown", onClickOutside);
 
-  // Open submenu on hover for desktop
-  const handleProjectsMouseEnter = () => {
-    if (!isMobile) setShowProjectsSubmenu(true);
-  };
+    return () => {
+      window.removeEventListener("scroll", onScroll, true);
+      window.removeEventListener("mousedown", onClickOutside);
+    };
+  }, [menuOpen]);
 
-  const handleProjectsMouseLeave = () => {
-    if (!isMobile) setShowProjectsSubmenu(false);
+  const toggleSubmenu = (name) => {
+    setOpenSubmenu((prev) => (prev === name ? null : name));
   };
 
   const handleLinkClick = (path) => {
-    setShowMenu(false);
-    setShowProjectsSubmenu(false);
+    setMenuOpen(false);
+    setOpenSubmenu(null);
     if (location.pathname === path) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const links = [
-    { name: "Home", path: "/" },
     {
       name: "Projects",
       path: "/projects",
@@ -93,112 +89,197 @@ const MenuBar = () => {
         { name: "Product Design", path: "/projects/product-design" },
       ],
     },
-    { name: "About", path: "/about" },
-    { name: "Services", path: "/services" },
+    { name: "Studio", path: "/studio" },
+    { name: "Blog", path: "/blog" },
+    {
+      name: "Media",
+      path: "/media",
+      submenu: [
+        { name: "News", path: "/media/news" },
+        { name: "Publications", path: "/media/publications" },
+      ],
+    },
+    { name: "Careers", path: "/careers" },
     { name: "Contact", path: "/contact" },
   ];
 
   return (
     <div
-      className="relative"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      className="relative z-[10000] font-sans"
+      style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}
     >
-      {/* Hamburger icon */}
-      <Menu className="w-8 h-8 cursor-pointer text-black" onClick={toggleMenu} />
+      {/* Desktop Menu */}
+      {!isMobile && (
+        <ul className="flex gap-6 text-white text-base">
+          {links.map((link) => {
+            const hasSubmenu = Boolean(link.submenu);
+            const isSubmenuOpen = openSubmenu === link.name;
 
+            return (
+              <li
+                key={link.path}
+                className="relative group"
+                onMouseEnter={() => hasSubmenu && setOpenSubmenu(link.name)}
+                onMouseLeave={() => hasSubmenu && setOpenSubmenu(null)}
+              >
+                <Link
+                  to={link.path}
+                  onClick={(e) => {
+                    if (hasSubmenu) e.preventDefault();
+                    else handleLinkClick(link.path);
+                  }}
+                  className="hover:text-gray-300 flex items-center gap-1"
+                >
+                  {link.name}
+                  {hasSubmenu && (
+                    <motion.span
+                      className="select-none"
+                      style={{ display: "flex" }}
+                      animate={{ rotate: isSubmenuOpen ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ChevronDown size={16} strokeWidth={2.5} />
+                    </motion.span>
+                  )}
+                </Link>
+
+                {hasSubmenu && (
+                  <AnimatePresence>
+                    {isSubmenuOpen && (
+                      <motion.ul
+                        variants={submenuVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        className="absolute top-full left-0 bg-black/80 backdrop-blur-lg rounded-lg mt-2 py-2 min-w-[200px] border border-white/10"
+                      >
+                        {link.submenu.map((sub) => (
+                          <motion.li key={sub.path} variants={submenuItemVariants}>
+                            <Link
+                              to={sub.path}
+                              onClick={() => handleLinkClick(sub.path)}
+                              className="block px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 text-base"
+                            >
+                              {sub.name}
+                            </Link>
+                          </motion.li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      {/* Mobile Menu Icon */}
+      {isMobile && (
+        <div className="inline-block relative z-[10000]">
+          <Menu
+            className="w-8 h-8 cursor-pointer text-white"
+            onClick={() => setMenuOpen((p) => !p)}
+          />
+        </div>
+      )}
+
+      {/* Mobile Sidebar Menu */}
       <AnimatePresence>
-        {showMenu && (
+        {isMobile && menuOpen && (
           <motion.ul
+            ref={menuRef}
             variants={menuVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="absolute right-0 top-0 mt-2 bg-white border border-gray-300 rounded-md shadow-lg py-2 z-50
-              w-[40vw] max-w-[180px] sm:max-w-[180px] h-screen"
+            className="fixed top-0 right-0 h-screen w-52  /* reduced width from w-64 to w-52 (13rem) */
+                       bg-black/70 backdrop-blur-lg border-l border-white/10
+                       shadow-2xl rounded-l-2xl z-[9999] py-6 overflow-y-auto"
+            style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}
           >
-            {/* Close icon on mobile */}
-            {isMobile && (
-              <div className="flex justify-end pr-4 pt-2">
-                <X
-                  className="w-6 h-6 cursor-pointer text-gray-700"
-                  onClick={() => setShowMenu(false)}
-                />
-              </div>
-            )}
+            {/* Mobile Close Button */}
+            <div className="flex justify-end pr-4 pb-4">
+              <X
+                className="w-6 h-6 cursor-pointer text-white"
+                onClick={() => setMenuOpen(false)}
+              />
+            </div>
 
-            {/* Route Links */}
-            {links.map((link) => {
-              if (link.submenu) {
-                // Projects with submenu
+            <div className="px-2">
+              {links.map((link) => {
+                const hasSubmenu = Boolean(link.submenu);
+                const isSubmenuOpen = openSubmenu === link.name;
+
                 return (
-                  <motion.li
-                    key={link.path}
-                    variants={itemVariants}
-                    onMouseEnter={handleProjectsMouseEnter}
-                    onMouseLeave={handleProjectsMouseLeave}
-                  >
+                  <motion.li key={link.path} variants={itemVariants} className="mb-1">
                     <Link
                       to={link.path}
-                      className="block px-4 py-2 cursor-pointer hover:text-blue-600 relative group flex justify-between items-center"
-                      onClick={toggleProjectsSubmenu}
+                      onClick={(e) => {
+                        if (hasSubmenu) {
+                          e.preventDefault();
+                          toggleSubmenu(link.name);
+                        } else {
+                          handleLinkClick(link.path);
+                        }
+                      }}
+                      className={`flex justify-between items-center px-6 py-2 
+                                 text-white text-base rounded-lg transition-colors duration-150 
+                                 ${isSubmenuOpen ? "bg-white/20" : "hover:bg-white/10"}`}
+                      style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}
                     >
                       {link.name}
-                      {/* Arrow indicator */}
-                      <span className="ml-2 inline-block transform transition-transform duration-300">
-                        {showProjectsSubmenu ? "▾" : "▸"}
-                      </span>
+                      {hasSubmenu && (
+                        <motion.span
+                          className="ml-2 select-none flex"
+                          animate={{ rotate: isSubmenuOpen ? 90 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <ChevronRight size={16} strokeWidth={2.5} />
+                        </motion.span>
+                      )}
                     </Link>
 
-                    <AnimatePresence>
-                      {showProjectsSubmenu && (
-                        <motion.ul
-                          variants={submenuVariants}
-                          initial="hidden"
-                          animate="visible"
-                          exit="hidden"
-                          className="ml-4 border-l border-gray-300"
-                        >
-                          {link.submenu.map((sub) => (
-                            <motion.li
-                              key={sub.path}
-                              variants={submenuItemVariants}
-                            >
-                              <Link
-                                to={sub.path}
-                                className="block px-4 py-2 cursor-pointer hover:text-blue-600"
-                                onClick={() => handleLinkClick(sub.path)}
+                    {hasSubmenu && (
+                      <AnimatePresence>
+                        {isSubmenuOpen && (
+                          <motion.ul
+                            variants={submenuVariants}
+                            initial="hidden"
+                            animate="visible"
+                            exit="hidden"
+                            className="ml-6"
+                          >
+                            {link.submenu.map((sub) => (
+                              <motion.li
+                                key={sub.path}
+                                variants={submenuItemVariants}
+                                className="flex justify-between items-center"
                               >
-                                {sub.name}
-                              </Link>
-                            </motion.li>
-                          ))}
-                        </motion.ul>
-                      )}
-                    </AnimatePresence>
+                                <Link
+                                  to={sub.path}
+                                  onClick={() => handleLinkClick(sub.path)}
+                                  className="block px-6 py-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-md transition-colors duration-150 text-base"
+                                  style={{
+                                    fontFamily:
+                                      "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                                  }}
+                                >
+                                  {sub.name}
+                                </Link>
+                              </motion.li>
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
+                    )}
                   </motion.li>
                 );
-              }
-
-              // Normal menu item without submenu
-              return (
-                <motion.li key={link.path} variants={itemVariants}>
-                  <Link
-                    to={link.path}
-                    className="block px-4 py-2 cursor-pointer hover:text-blue-600 relative group"
-                    onClick={() => handleLinkClick(link.path)}
-                  >
-                    {link.name}
-                    <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                </motion.li>
-              );
-            })}
+              })}
+            </div>
           </motion.ul>
         )}
       </AnimatePresence>
     </div>
   );
-};
-
-export default MenuBar;
+}
