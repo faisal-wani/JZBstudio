@@ -1,10 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-10">
-      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Brand Logo */}
         <div>
           <img
@@ -15,18 +14,6 @@ const Footer = () => {
           <p className="text-sm">
             Crafting digital excellence through design and technology.
           </p>
-        </div>
-
-        {/* Quick Links */}
-        <div>
-          <h2 className="text-xl font-semibold mb-3">Quick Links</h2>
-          <ul className="space-y-2 text-sm">
-            <li><Link to="/" className="hover:text-gray-400">Home</Link></li>
-            <li><Link to="/about" className="hover:text-gray-400">About</Link></li>
-            <li><Link to="/services" className="hover:text-gray-400">Services</Link></li>
-            <li><Link to="/projects" className="hover:text-gray-400">Projects</Link></li>
-            <li><Link to="/contact" className="hover:text-gray-400">Contact</Link></li>
-          </ul>
         </div>
 
         {/* Contact Info */}
