@@ -1,24 +1,25 @@
 import React from "react";
 import { motion } from "framer-motion";
+import "./font.css"; // import the font styles
 
 const AboutSection = () => {
   return (
-    <section className="py-20 bg-white rounded-xl shadow-inner mt-10">
+    <section className="py-20 mt-10"> {/* No background, fully transparent */}
       <div className="max-w-4xl mx-auto px-6 text-center">
         {/* Title */}
         <motion.h2
-          className="text-4xl mb-6 font-bold text-gray-900"
+          className="core-services-title text-4xl mb-6 font-bold text-white"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          Our Vision & Story
+          THE STUDIO
         </motion.h2>
 
         {/* Underline */}
         <motion.div
-          className="h-1 w-24 bg-blue-600 mx-auto mb-12 rounded-full"
+          className="h-1 w-24 bg-blue-500 mx-auto mb-12 rounded-full"
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
@@ -27,7 +28,7 @@ const AboutSection = () => {
 
         {/* Text content */}
         <motion.div
-          className="text-lg text-gray-700 space-y-6"
+          className="text-lg text-white/90 space-y-6"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

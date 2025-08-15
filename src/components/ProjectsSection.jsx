@@ -4,6 +4,7 @@ import ProjectCard from "./ProjectCard";
 import ProjectDetail from "./ProjectDetail";
 import Loader from "./Loader";
 import projects from "../data/projects";
+import "./font.css"; // reuse Monument Extended font
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -19,7 +20,6 @@ const ProjectsSection = () => {
     setTimeout(() => {
       setSelectedProject(project);
       setIsLoading(false);
-      // Scroll to top after selection
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 300);
   };
@@ -29,7 +29,6 @@ const ProjectsSection = () => {
     setTimeout(() => {
       setSelectedProject(null);
       setIsLoading(false);
-      // Scroll to top after going back
       window.scrollTo({ top: 0, behavior: "smooth" });
     }, 300);
   };
@@ -42,16 +41,16 @@ const ProjectsSection = () => {
         {selectedProject ? (
           <ProjectDetail project={selectedProject} onBack={handleBackToProjects} />
         ) : (
-         <motion.section
-  id="projects"
-  className="py-16 bg-gray-50"
-  variants={sectionVariants}
-  initial="hidden"
-  animate="visible"
->
+          <motion.section
+            id="projects"
+            className="py-16 bg-transparent backdrop-blur-sm border border-white/10 rounded-xl shadow-inner"
+            variants={sectionVariants}
+            initial="hidden"
+            animate="visible"
+          >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-12">
-                🌟 Our Featured Projects
+              <h2 className="core-services-title text-3xl sm:text-4xl font-bold text-center text-white drop-shadow-lg mb-12">
+                FEATURED PROJECTS
               </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">

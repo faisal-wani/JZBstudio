@@ -1,46 +1,95 @@
-import React, { useState, useRef } from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useState } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+
+const springValues = {
+  damping: 40, // smooth
+  stiffness: 60, // soft
+  mass: 2,
+};
 
 const ProjectCard = ({ project, onSelectProject }) => {
+  const ref = useRef(null);
+
+  const rotateX = useSpring(useMotionValue(0), springValues);
+  const rotateY = useSpring(useMotionValue(0), springValues);
+  const scale = useSpring(1, springValues);
+
   const [isHovered, setIsHovered] = useState(false);
-  const cardRef = useRef(null);
+
+  function handleMouse(e) {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left - rect.width / 2;
+    const offsetY = e.clientY - rect.top - rect.height / 2;
+
+    const rotationX = (offsetY / (rect.height / 2)) * -10;
+    const rotationY = (offsetX / (rect.width / 2)) * 10;
+
+    rotateX.set(rotationX);
+    rotateY.set(rotationY);
+  }
+
+  function handleMouseEnter() {
+    setIsHovered(true);
+    scale.set(1.05);
+  }
+
+  function handleMouseLeave() {
+    setIsHovered(false);
+    scale.set(1);
+    rotateX.set(0);
+    rotateY.set(0);
+  }
 
   return (
-    <motion.div
-      ref={cardRef}
-      className="block bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer relative"
-      whileHover={{ scale: 1.03 }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      transition={{ duration: 0.3, ease: "easeOut" }}
+    <figure
+      ref={ref}
+      className="relative w-full h-full perspective-1000 cursor-pointer"
+      onMouseMove={handleMouse}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       onClick={() => onSelectProject(project)}
     >
-      {/* Image */}
-      <div className="relative w-full h-64 overflow-hidden">
-        <img
+      <motion.div
+        className="relative rounded-xl overflow-hidden shadow-lg"
+        style={{
+          rotateX,
+          rotateY,
+          scale,
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {/* Project image */}
+        <motion.img
           src={project.imageUrl}
           alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-300 transform group-hover:scale-105"
+          className="w-full h-64 object-cover"
+          style={{ borderRadius: "12px" }}
+          animate={{
+            filter: isHovered
+              ? "grayscale(100%) brightness(0.6) blur(3px)"
+              : "grayscale(0%) brightness(1) blur(0px)",
+          }}
+          transition={{ duration: 0.4 }}
         />
-        {/* Hover overlay */}
-        <motion.div
-          className="absolute inset-0 bg-black bg-opacity-50 flex items-end p-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <h3 className="text-white text-2xl font-semibold">{project.title}</h3>
-        </motion.div>
-      </div>
 
-      {/* Text below image */}
-      <div className="p-6">
-        <h3 className="text-2xl font-semibold mb-2 text-gray-800">
-          {project.title}
-        </h3>
-        <p className="text-gray-600 text-sm">{project.location}</p>
-      </div>
-    </motion.div>
+        {/* Popup text in middle */}
+        <motion.div
+          className="absolute inset-0 flex justify-center items-center"
+          initial={{ opacity: 0, y: 30, scale: 0.9 }}
+          animate={
+            isHovered
+              ? { opacity: 1, y: 0, scale: 1 }
+              : { opacity: 0, y: 30, scale: 0.9 }
+          }
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        >
+          <h3 className="text-white text-2xl font-semibold drop-shadow-lg">
+            {project.title}
+          </h3>
+        </motion.div>
+      </motion.div>
+    </figure>
   );
 };
 
