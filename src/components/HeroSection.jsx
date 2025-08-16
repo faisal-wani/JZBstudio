@@ -1,14 +1,43 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const HeroSection = () => {
-  const ref = useRef(null);
+  const ref = useRef(null);       // Ref for the hero section
+  const vantaRef = useRef(null);  // Ref to store Vanta instance
+
+  // Framer Motion scroll animation
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
-
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "200%"]);
+
+  useEffect(() => {
+    let vantaEffect;
+    // Check if VANTA is loaded (from CDN)
+    if (window.VANTA && ref.current) {
+      vantaEffect = window.VANTA.WAVES({
+        el: ref.current,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200,
+        minWidth: 200,
+        scale: 0.7,
+        scaleMobile: 1,
+        color: 0xe0e0e,    // Background color
+        shininess: 40,     // Shininess
+        waveHeight: 15,    // Wave height
+        waveSpeed: 1,      // Wave speed
+        zoom: 1,           // Zoom
+      });
+      vantaRef.current = vantaEffect;
+    }
+
+    return () => {
+      if (vantaRef.current) vantaRef.current.destroy();
+    };
+  }, []);
 
   return (
     <motion.div

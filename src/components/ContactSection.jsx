@@ -8,7 +8,7 @@ const ContactSection = () => {
       <div className="max-w-2xl mx-auto px-6">
         {/* Title */}
         <motion.h2
-          className="core-services-title text-4xl text-center mb-12 font-bold text-white drop-shadow-lg"
+          className="core-services-title text-4xl text-center mb-12 font-bold text-black"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -28,14 +28,14 @@ const ContactSection = () => {
           >
             <label
               htmlFor="name"
-              className="block text-white/90 text-sm font-bold mb-2"
+              className="block text-gray-800 text-sm font-semibold mb-2"
             >
               Name
             </label>
             <input
               type="text"
               id="name"
-              className="w-full border border-white/20 bg-white/10 text-white rounded-lg px-4 py-3 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full border border-gray-300 bg-white/80 text-gray-900 rounded-lg px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
               placeholder="Your Name"
             />
           </motion.div>
@@ -49,14 +49,14 @@ const ContactSection = () => {
           >
             <label
               htmlFor="email"
-              className="block text-white/90 text-sm font-bold mb-2"
+              className="block text-gray-800 text-sm font-semibold mb-2"
             >
               Email
             </label>
             <input
               type="email"
               id="email"
-              className="w-full border border-white/20 bg-white/10 text-white rounded-lg px-4 py-3 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full border border-gray-300 bg-white/80 text-gray-900 rounded-lg px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
               placeholder="your@email.com"
             />
           </motion.div>
@@ -70,22 +70,22 @@ const ContactSection = () => {
           >
             <label
               htmlFor="message"
-              className="block text-white/90 text-sm font-bold mb-2"
+              className="block text-gray-800 text-sm font-semibold mb-2"
             >
               Message
             </label>
             <textarea
               id="message"
               rows="6"
-              className="w-full border border-white/20 bg-white/10 text-white rounded-lg px-4 py-3 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full border border-gray-300 bg-white/80 text-gray-900 rounded-lg px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
               placeholder="Tell us about your project..."
             ></textarea>
           </motion.div>
 
-          {/* Submit Button */}
+          {/* Submit Button with Dark Blur + Shine */}
           <motion.button
             type="submit"
-            className="w-full bg-blue-600/80 text-white font-bold py-3 rounded-lg hover:bg-blue-700/80 transition-all duration-300"
+            className="relative w-full bg-black/40 backdrop-blur-md text-white font-bold py-3 rounded-lg overflow-hidden transition-all duration-300 border border-white/10 hover:bg-black/60"
             whileHover={{ y: -3 }}
             whileTap={{ scale: 0.97 }}
             initial={{ opacity: 0, y: 20 }}
@@ -93,10 +93,27 @@ const ContactSection = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
           >
-            Send Message
+            <span className="relative z-10">Send Message</span>
+            {/* Shiny overlay */}
+            <span
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent
+              translate-x-[-100%] animate-[shine_3s_linear_infinite]"
+            />
           </motion.button>
         </form>
       </div>
+
+      {/* Inline keyframes for shine effect */}
+      <style jsx>{`
+        @keyframes shine {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(100%);
+          }
+        }
+      `}</style>
     </section>
   );
 };

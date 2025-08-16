@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, ChevronRight } from "lucide-react"; // fancy icons
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const menuVariants = {
@@ -44,21 +44,16 @@ export default function MenuBar() {
     };
   }, []);
 
-  // Close menu on scroll or click outside
   useEffect(() => {
     if (!menuOpen) return;
-
     const onScroll = () => setMenuOpen(false);
-
     const onClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setMenuOpen(false);
       }
     };
-
     window.addEventListener("scroll", onScroll, true);
     window.addEventListener("mousedown", onClickOutside);
-
     return () => {
       window.removeEventListener("scroll", onScroll, true);
       window.removeEventListener("mousedown", onClickOutside);
@@ -86,7 +81,7 @@ export default function MenuBar() {
         { name: "Interiors", path: "/projects/interiors" },
         { name: "Architecture", path: "/projects/architecture" },
         { name: "Commercial", path: "/projects/commercial" },
-        { name: "Product Design", path: "/projects/product-design" },
+        { name: "Elements", path: "/projects/product-design" },
       ],
     },
     { name: "Studio", path: "/studio" },
@@ -105,12 +100,12 @@ export default function MenuBar() {
 
   return (
     <div
-      className="relative z-[10000] font-sans"
-      style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}
+      className="relative z-[10000]"
+      style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 100 }}
     >
       {/* Desktop Menu */}
       {!isMobile && (
-        <ul className="flex gap-6 text-white text-base">
+        <ul className="flex gap-6 text-white text-sm">
           {links.map((link) => {
             const hasSubmenu = Boolean(link.submenu);
             const isSubmenuOpen = openSubmenu === link.name;
@@ -138,7 +133,7 @@ export default function MenuBar() {
                       animate={{ rotate: isSubmenuOpen ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <ChevronDown size={16} strokeWidth={2.5} />
+                      <ChevronDown size={14} strokeWidth={2.5} />
                     </motion.span>
                   )}
                 </Link>
@@ -151,14 +146,14 @@ export default function MenuBar() {
                         initial="hidden"
                         animate="visible"
                         exit="hidden"
-                        className="absolute top-full left-0 bg-black/80 backdrop-blur-lg rounded-lg mt-2 py-2 min-w-[200px] border border-white/10"
+                        className="absolute top-full left-0 bg-black/80 backdrop-blur-lg rounded-lg mt-2 py-2 min-w-[180px] border border-white/10"
                       >
                         {link.submenu.map((sub) => (
                           <motion.li key={sub.path} variants={submenuItemVariants}>
                             <Link
                               to={sub.path}
                               onClick={() => handleLinkClick(sub.path)}
-                              className="block px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 text-base"
+                              className="block px-4 py-2 text-gray-300 hover:text-white hover:bg-white/10 text-sm"
                             >
                               {sub.name}
                             </Link>
@@ -178,7 +173,7 @@ export default function MenuBar() {
       {isMobile && (
         <div className="inline-block relative z-[10000]">
           <Menu
-            className="w-8 h-8 cursor-pointer text-white"
+            className="w-7 h-7 cursor-pointer text-white"
             onClick={() => setMenuOpen((p) => !p)}
           />
         </div>
@@ -193,10 +188,10 @@ export default function MenuBar() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed top-0 right-0 h-screen w-52  /* reduced width from w-64 to w-52 (13rem) */
+            className="fixed top-0 right-0 h-screen w-48  
                        bg-black/70 backdrop-blur-lg border-l border-white/10
                        shadow-2xl rounded-l-2xl z-[9999] py-6 overflow-y-auto"
-            style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}
+            style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 100 }}
           >
             {/* Mobile Close Button */}
             <div className="flex justify-end pr-4 pb-4">
@@ -224,9 +219,8 @@ export default function MenuBar() {
                         }
                       }}
                       className={`flex justify-between items-center px-6 py-2 
-                                 text-white text-base rounded-lg transition-colors duration-150 
+                                 text-white text-sm rounded-lg transition-colors duration-150 
                                  ${isSubmenuOpen ? "bg-white/20" : "hover:bg-white/10"}`}
-                      style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}
                     >
                       {link.name}
                       {hasSubmenu && (
@@ -235,7 +229,7 @@ export default function MenuBar() {
                           animate={{ rotate: isSubmenuOpen ? 90 : 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <ChevronRight size={16} strokeWidth={2.5} />
+                          <ChevronRight size={14} strokeWidth={2.5} />
                         </motion.span>
                       )}
                     </Link>
@@ -259,11 +253,7 @@ export default function MenuBar() {
                                 <Link
                                   to={sub.path}
                                   onClick={() => handleLinkClick(sub.path)}
-                                  className="block px-6 py-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-md transition-colors duration-150 text-base"
-                                  style={{
-                                    fontFamily:
-                                      "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-                                  }}
+                                  className="block px-6 py-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-md transition-colors duration-150 text-sm"
                                 >
                                   {sub.name}
                                 </Link>
